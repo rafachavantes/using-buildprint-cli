@@ -2,7 +2,7 @@
 
 ## Current Task
 
-**Task 9: Final verification and local install** — Not started.
+**Done.** Plugin is built, tested, and published.
 
 ## Completed This Build (2026-05-07)
 
@@ -12,6 +12,9 @@
 - `SKILL.md`: thin orchestrator with workflow, safety rules, and rationalization blocklist — TDD-verified (6 scenarios A–F, all PASS)
 - `README.md`: user-facing install and setup guide
 - `CLAUDE.md` + `progress.md`: session continuity setup
+- `marketplace.json`: added to `.claude-plugin/` for self-hosted marketplace support
+- Distribution URLs updated to `rafachavantes/using-buildprint-cli` (personal GitHub account)
+- Pushed to GitHub: `https://github.com/rafachavantes/using-buildprint-cli`
 
 ## Key Decisions
 
@@ -19,9 +22,15 @@
 - **commands.md kept**: cached reference is cheaper than repeated `--help` calls; stale → fall back to `buildprint <cmd> --help`, then update the file
 - **Safety rules are non-negotiable**: rationalization blocklist in SKILL.md captures verbatim excuses observed in baseline testing (time pressure, authority, "check already passed", etc.)
 - **Live branch always requires explicit confirmation**: critical miss found in baseline — agent would apply to `live` after check passed without asking. Fixed in SKILL.md.
+- **Personal GitHub, no Anthropic marketplace**: distributing via `rafachavantes/using-buildprint-cli`; Anthropic marketplace submission deferred
+
+## Distribution
+
+- **Install:** `claude plugin install https://github.com/rafachavantes/using-buildprint-cli`
+- **Activate:** `/reload-plugins`
+- **Anthropic marketplace:** not submitted (deferred)
 
 ## Next Steps
 
-1. **Task 9**: `claude plugin install /Users/rafa/Documents/Development/BuiltPrint-Skill`, run `/reload-plugins`, smoke test skill activation
-2. **GitHub**: create `moara-digital/buildprint-cli` repo, `git remote add origin`, `git push -u origin main`
-3. **Distribution**: create marketplace repo with `marketplace.json` OR submit to official Anthropic marketplace at `platform.claude.com/plugins/submit`
+- Install globally: `claude plugin install https://github.com/rafachavantes/using-buildprint-cli`
+- Use in Bubble workspace sessions — activate skill with `buildprint-cli:using-buildprint-cli`
