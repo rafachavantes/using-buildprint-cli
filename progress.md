@@ -26,11 +26,14 @@
 
 ## Distribution
 
-- **Install:** `claude plugin install https://github.com/rafachavantes/using-buildprint-cli`
-- **Activate:** `/reload-plugins`
+- **Install (in any Claude Code session):**
+  - `/plugin marketplace add rafachavantes/using-buildprint-cli`
+  - `/plugin install buildprint-cli@buildprint-cli`
+  - `/reload-plugins`
+- **Note:** the shell `claude plugin install <url>` command does **not** accept GitHub URLs — marketplace registration only works via the TUI slash commands.
 - **Anthropic marketplace:** not submitted (deferred)
 
 ## Next Steps
 
-- Install globally: `claude plugin install https://github.com/rafachavantes/using-buildprint-cli`
+- Install globally via the TUI commands above
 - Use in Bubble workspace sessions — activate skill with `buildprint-cli:using-buildprint-cli`

@@ -22,17 +22,17 @@ When using Buildprint on the web, the platform automatically injects rich contex
 
 ## Installation
 
-### Local (development)
+In any Claude Code session, run:
 
-```bash
-claude plugin install /path/to/buildprint-cli
+```
+/plugin marketplace add rafachavantes/using-buildprint-cli
+/plugin install buildprint-cli@buildprint-cli
+/reload-plugins
 ```
 
-### From URL (once published)
+The plugin is then available in every project directory.
 
-```bash
-claude plugin install https://github.com/<your-org>/buildprint-cli
-```
+> Note: the shell `claude plugin install <url>` command does **not** accept GitHub URLs. Marketplace registration only works through the TUI slash commands above.
 
 ## Setup
 
