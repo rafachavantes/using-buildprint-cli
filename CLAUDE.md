@@ -59,9 +59,12 @@ Skill changes are tested via subagent forced-choice scenarios (A/B/C format with
 ## Distribution
 
 - **Plugin repo:** `https://github.com/rafachavantes/using-buildprint-cli`
-- **CLI install:** `claude plugin install https://github.com/rafachavantes/using-buildprint-cli`
-- **In-session install:** `/plugin install buildprint-cli@<marketplace>` (requires marketplace repo)
-- **Official marketplace:** submit at `platform.claude.com/plugins/submit`
+- **Install (one-time, in any Claude Code session):**
+  - `/plugin marketplace add rafachavantes/using-buildprint-cli`
+  - `/plugin install buildprint-cli@buildprint-cli`
+  - `/reload-plugins`
+- **Note:** the shell `claude plugin install <url>` command does **not** accept GitHub URLs. Marketplace registration only works through the TUI slash commands.
+- **Official marketplace:** submit at `platform.claude.com/plugins/submit` (deferred)
 
 ## Do Not
 

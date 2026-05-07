@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "buildprint-cli",
-      "source": "https://github.com/rafachavantes/using-buildprint-cli",
+      "source": "./",
       "description": "Skill for working with Bubble.io apps via the Buildprint CLI: workflow enforcement, guideline navigation, and command reference",
       "version": "0.1.0",
       "author": {
