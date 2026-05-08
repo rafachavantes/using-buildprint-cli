@@ -16,3 +16,5 @@
 
 # Claude Code local state
 .claude/settings.local.json
+CLAUDE.md
+progress.md
