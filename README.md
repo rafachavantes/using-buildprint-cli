@@ -18,9 +18,11 @@ When using Buildprint on the web, the platform automatically injects rich contex
 ## Requirements
 
 - [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) installed and authenticated
-- Claude Code
+- Claude Code **or** [OpenAI Codex CLI](https://github.com/openai/codex)
 
 ## Installation
+
+### Claude Code
 
 In any Claude Code session, run:
 
@@ -30,9 +32,15 @@ In any Claude Code session, run:
 /reload-plugins
 ```
 
-The plugin is then available in every project directory.
+### Codex CLI
 
-> Note: the shell `claude plugin install <url>` command does **not** accept GitHub URLs. Marketplace registration only works through the TUI slash commands above.
+```bash
+codex plugin marketplace add rafachavantes/using-buildprint-cli
+```
+
+Then open `/plugins` in Codex CLI and install `buildprint-cli`.
+
+> **Note:** The same skill works identically on both platforms. No configuration differences.
 
 ## Setup
 
