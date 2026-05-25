@@ -1,6 +1,6 @@
 # buildprint-cli
 
-A Claude Code plugin that gives Claude the workflow, safety guardrails, and command reference to effectively use the [Buildprint CLI](https://buildprint.ai) for Bubble.io app development.
+A plugin that gives AI coding agents the workflow, safety guardrails, and command reference to effectively use the [Buildprint CLI](https://buildprint.ai) for Bubble.io app development. Works with Claude Code and OpenAI Codex CLI.
 
 ## What it does
 
@@ -13,14 +13,16 @@ When you work with Bubble.io apps via the Buildprint CLI, this plugin:
 
 ## Why
 
-When using Buildprint on the web, the platform automatically injects rich context before every agent call — Bubble's entity model, valid action types, security patterns, workflow guardrails. On the CLI, Claude sees only JSON files. This plugin replicates that context injection experience.
+When using Buildprint on the web, the platform automatically injects rich context before every agent call — Bubble's entity model, valid action types, security patterns, workflow guardrails. On the CLI, the agent sees only JSON files. This plugin replicates that context injection experience.
 
 ## Requirements
 
 - [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) installed and authenticated
-- Claude Code
+- Claude Code **or** [OpenAI Codex CLI](https://github.com/openai/codex)
 
 ## Installation
+
+### Claude Code
 
 In any Claude Code session, run:
 
@@ -30,9 +32,15 @@ In any Claude Code session, run:
 /reload-plugins
 ```
 
-The plugin is then available in every project directory.
+### Codex CLI
 
-> Note: the shell `claude plugin install <url>` command does **not** accept GitHub URLs. Marketplace registration only works through the TUI slash commands above.
+```bash
+codex plugin marketplace add rafachavantes/using-buildprint-cli
+```
+
+Then open `/plugins` in Codex CLI and install `buildprint-cli`.
+
+> **Note:** The same skill works identically on both platforms. No configuration differences.
 
 ## Setup
 
