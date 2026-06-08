@@ -8,7 +8,7 @@
       "name": "buildprint-cli",
       "source": {
         "source": "local",
-        "path": "."
+        "path": "./plugins/buildprint-cli"
       },
       "policy": {
         "installation": "AVAILABLE",
