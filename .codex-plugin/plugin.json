@@ -8,5 +8,20 @@
   },
   "homepage": "https://github.com/moara-digital/buildprint-cli",
   "keywords": ["bubble", "buildprint", "cli", "no-code"],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Buildprint CLI",
+    "shortDescription": "Work with Bubble.io apps via the Buildprint CLI.",
+    "longDescription": "Workflow enforcement, guideline navigation, and command reference for building Bubble.io apps with the Buildprint CLI.",
+    "developerName": "Rafael Chavantes",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://github.com/moara-digital/buildprint-cli/",
+    "defaultPrompt": [
+      "Show the Buildprint CLI command reference.",
+      "Help me work with my Bubble.io app via Buildprint."
+    ]
+  }
 }
