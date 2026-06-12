@@ -31,6 +31,9 @@ Run this before any other work. It establishes the app context model, traversal 
 | API Connector                  | `buildprint guidelines get schema/api-connector`                                       |
 | Stripe / billing               | `buildprint guidelines get cookbooks/stripe schema/api-connector`                      |
 | Refactoring into reusables     | `buildprint guidelines get cookbooks/refactoring-into-reusables`                       |
+| Extract repeated expressions   | `buildprint guidelines get cookbooks/upgrade-to-global-expressions`                    |
+| Install/adapt a component      | `buildprint guidelines get components/installing`                                      |
+| Author/publish a component     | `buildprint guidelines get components/authoring`                                       |
 | Privacy rules / access control | `buildprint guidelines get security/privacy-rules security/bubble`                     |
 | Security review / audit        | `buildprint guidelines get security/bubble security/privacy-rules`                     |
 | Live data investigation        | `buildprint guidelines get data/retrieving-database-data`                              |

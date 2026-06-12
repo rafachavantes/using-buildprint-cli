@@ -1,12 +1,12 @@
 {
   "name": "buildprint-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Skill for working with Bubble.io apps via the Buildprint CLI: workflow enforcement, guideline navigation, and command reference",
   "author": {
     "name": "Rafael",
     "email": "contato@moara.digital"
   },
-  "homepage": "https://github.com/moara-digital/buildprint-cli",
+  "homepage": "https://github.com/rafachavantes/using-buildprint-cli",
   "keywords": ["bubble", "buildprint", "cli", "no-code"],
   "skills": "./skills/",
   "interface": {
@@ -18,7 +18,7 @@
     "capabilities": [
       "Interactive"
     ],
-    "websiteURL": "https://github.com/moara-digital/buildprint-cli/",
+    "websiteURL": "https://github.com/rafachavantes/using-buildprint-cli/",
     "defaultPrompt": [
       "Show the Buildprint CLI command reference.",
       "Help me work with my Bubble.io app via Buildprint."
