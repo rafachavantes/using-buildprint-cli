@@ -9,7 +9,7 @@
       "name": "buildprint-cli",
       "source": "./plugins/buildprint-cli",
       "description": "Skill for working with Bubble.io apps via the Buildprint CLI: workflow enforcement, guideline navigation, and command reference",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "Rafael",
         "email": "contato@moara.digital"

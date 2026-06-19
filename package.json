@@ -1,0 +1,10 @@
+{
+  "name": "buildprint-cli",
+  "version": "0.3.0",
+  "description": "Skill for working with Bubble.io apps via the Buildprint CLI: workflow enforcement, guideline navigation, and command reference",
+  "license": "MIT",
+  "type": "module",
+  "main": ".opencode/plugins/buildprint-cli.js",
+  "homepage": "https://github.com/rafachavantes/using-buildprint-cli",
+  "keywords": ["bubble", "buildprint", "cli", "no-code", "opencode"]
+}

@@ -1,6 +1,6 @@
 # buildprint-cli
 
-A plugin that gives AI coding agents the workflow, safety guardrails, and command reference to effectively use the [Buildprint CLI](https://buildprint.ai) for Bubble.io app development. Works with Claude Code and OpenAI Codex CLI.
+A plugin that gives AI coding agents the workflow, safety guardrails, and command reference to effectively use the [Buildprint CLI](https://buildprint.ai) for Bubble.io app development. Works with Claude Code, OpenAI Codex CLI, and OpenCode.
 
 ## What it does
 
@@ -18,7 +18,7 @@ When using Buildprint on the web, the platform automatically injects rich contex
 ## Requirements
 
 - [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) installed and authenticated
-- Claude Code **or** [OpenAI Codex CLI](https://github.com/openai/codex)
+- Claude Code, [OpenAI Codex CLI](https://github.com/openai/codex), or [OpenCode](https://opencode.ai)
 
 ## Installation
 
@@ -40,7 +40,19 @@ codex plugin marketplace add rafachavantes/using-buildprint-cli
 
 Then open `/plugins` in Codex CLI and install `buildprint-cli`.
 
-> **Note:** The same skill works identically on both platforms. No configuration differences.
+### OpenCode
+
+Add the plugin to the `plugin` array in your `opencode.json` (global at `~/.config/opencode/opencode.json`, or project-level):
+
+```json
+{
+  "plugin": ["buildprint-cli@git+https://github.com/rafachavantes/using-buildprint-cli"]
+}
+```
+
+Restart OpenCode. The plugin installs through OpenCode's plugin manager (via Bun) and registers its skill directory so `using-buildprint-cli` is discoverable through the native `skill` tool — no symlinks or manual copies. See [`.opencode/INSTALL.md`](.opencode/INSTALL.md) for migration, update, and troubleshooting notes.
+
+> **Note:** The same skill works identically on all three platforms. No configuration differences.
 
 ## Setup
 

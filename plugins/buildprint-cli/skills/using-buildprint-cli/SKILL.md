@@ -1,6 +1,7 @@
 ---
 name: using-buildprint-cli
 description: Use when the user works with Bubble.io apps via the Buildprint CLI — cloning workspaces, editing JSON, validating, applying, auditing, or managing branches/savepoints. Triggers on `buildprint` commands or mentions of Buildprint, Bubble app editing, or workspace work.
+license: MIT
 ---
 
 # Using Buildprint CLI
