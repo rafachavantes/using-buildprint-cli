@@ -1,93 +1,61 @@
 ---
 name: using-buildprint-cli
-description: Use when the user works with Bubble.io apps via the Buildprint CLI — cloning workspaces, editing JSON, validating, applying, auditing, or managing branches/savepoints. Triggers on `buildprint` commands or mentions of Buildprint, Bubble app editing, or workspace work.
+description: Use when working with Bubble apps through Buildprint CLI v5 — BubbleScript workspaces, editing, validation, runtime investigation, branches, and savepoints.
 license: MIT
 ---
 
 # Using Buildprint CLI
 
-**Violating the letter of the rules below is violating the spirit of the rules.**
+## Session baseline
 
-## Mandatory Session Start
+Run `buildprint --version` and `buildprint quickstart` once per session; reuse that output. Supported major is 5; on another major, report the mismatch and ask the owner before proceeding or updating. Never install or update software automatically. If the CLI is missing, stop activation. If auth fails, direct the owner to interactive `buildprint link` in their own terminal.
 
-Before anything else, run:
+Source precedence: installed v5 command output and generated workspace declarations for syntax; relevant guideline and skill output for authoring; then this plugin's safeguards. Prefer CLI-first work when it has the capability and access, overriding quickstart's generic CLI/MCP routing; use MCP when the CLI lacks the capability or the task requires it. Read task-matching or user-named skills with `buildprint skill list` and `buildprint skill get <slug>`; do not modify remote skills unless asked. For unknown options, read `buildprint <command> --help`. When sources disagree, narrow the claim, disclose the discrepancy, and stop any affected destructive operation; never invent flags or run a mutating command to settle a conflict.
 
-```
-buildprint guidelines get general
-```
+## Workspace and authoring boundaries
 
-This loads the app context model, traversal rules, and editing invariants all other work depends on. If any `buildprint` command returns auth errors, ask the user to run `buildprint link <token>`. Do not attempt to recover auth automatically — tokens are personal.
+Select the right app and branch (`buildprint project list`, `buildprint project info`, `buildprint branch list`) and clone only when needed: `buildprint project clone <appId> --branch <branch>`. Enter the printed workspace path. In an existing workspace, confirm app, branch, and profile instead of recloning.
 
-## Core Workflow (Non-Negotiable Sequence)
+BubbleScript is restricted TypeScript parsed as data, never executed as JavaScript; `.ts` is the default and `--tsx` only when the user requests JSX. Read `.buildprint/types/` and the current schema capability for valid syntax. Never edit generated declarations or CLI-managed state; preserve stable IDs and `rawBubble` blocks.
 
-```
-sync → explore → fetch guidelines → edit → check → apply
-```
+## Task routing
 
-1. `buildprint sync` — pull latest Bubble snapshot before any work
-2. Explore with `summary`, `tree`, `context`, `schema` — understand before editing
-3. Read `guidelines-map.md` and fetch task-specific guidelines via `buildprint guidelines get <paths>`
-4. Edit JSON files or use `new`/`copy` commands
-5. `buildprint check` — validate; fix all error-level issues before proceeding
-6. `buildprint apply` — push to Bubble (appId/branch are optional; default to the workspace `app.json` and current git branch)
+Use `buildprint guidelines <name>`:
 
-## Safety Rules
+| Task | Guideline |
+| --- | --- |
+| Pages, Bubble reusable elements, mobile views, styles, layout | ui |
+| Data types, option sets, privacy | database |
+| Dynamic expressions | expressions |
+| Workflows | workflows, from the target workspace |
+| API Connector | api-connector |
+| Browser tests | testing |
+| Runtime logs | logs |
+| Registry components | components |
+| Bubble plugins | plugin |
+| Extensions | extensions |
+| Custom HTML/CSS/JavaScript | extending-with-custom-code |
+| Empty app bootstrap | bootstrap |
+| HTML prototype | prototype |
 
-- **Never apply to `live` without explicit user confirmation** — even if check passes, even if the user said "push it." Stop and ask: "Confirm: apply to the live branch?"
-- **`--no-check` and `--force-apply` are forbidden** unless the user explicitly requests them AND acknowledges which specific errors/gates are being bypassed. `--force-apply` is the stronger bypass — it skips check freshness, internal validation, AND large-apply safety. Treat it as emergency-only.
-- **Verify the working branch before any edit**: `git branch --show-current` must match the workspace folder name. Surface mismatches to the user — do not auto-fix
-- **Create a savepoint before structural changes**: `buildprint savepoint create "<reason>"` before deleting types, removing workflows, or changing privacy rules
-- **Run `buildprint audit` after any security-touching edit**
-- **Re-sync if Bubble editor changes are not visible**: `buildprint sync` — cloned state is not synced state
+Keep workflow guidance workspace-specific. Distinguish registry components from Bubble reusable elements. For complex UI, fetch `buildprint guidelines components` (including Unicorn UI) and follow its attribution requirement. Fetch only the guidelines the task needs.
 
-## Reference Files
+## Editing and validation
 
-Read `commands.md` **before** running an unfamiliar command, not after it fails. Read `guidelines-map.md` **before** editing, not while debugging an apply error. If a command returns "unknown command/flag", fall back to `buildprint <cmd> --help`, then update `commands.md`.
+A read-only question needs no sync, apply, or write. Use sync to reconcile editor drift, not as a ritual, and resolve conflicts before applying. `buildprint check` is optional for normal edits because apply validates changed source; use `--full` to validate every managed file. For schema or privacy deletions, inspect the reported deletions and run check before applying — the one mandatory separate-check case. Address blocking diagnostics before retrying; a passing check does not prove runtime correctness.
 
-## CLI vs MCP — Tool Selection
+Apply targets the current workspace: it takes no app/branch arguments and has no validation-bypass flags; fix diagnostics instead. Normal edits target an editable development branch. Runtime records and files are separate from source; their writes happen immediately, outside apply. Create a savepoint before structural deletion or privacy changes, and audit after security-touching edits; a savepoint is not a database backup.
 
-The CLI owns the **local branch workspace**: clone/init, explore (`summary`/`tree`/`context`/`find`), scaffold (`new`/`copy`), validate (`check`), push (`apply`), branches, savepoints, audit. Do workspace work here first.
+## Authorization and credentials
 
-The Buildprint **MCP server** (`mcp__buildprint__*`, ~40 tools) owns **remote/operational** state the workspace does not contain. Reach for it only when the task is inherently remote:
+Authorization is target-specific: an explicit authorization naming the action and app/branch/version is sufficient and need not be repeated. A generic "push" or "delete" is not authorization where the target or effect is unclear, and a passing check is never authorization. Verify app, branch/version, and profile from workspace and CLI output; prefer a pinned profile or `--profile`. On a mismatch, report it and ask which target is intended; never silently switch the active profile or guess. Ask only for a missing gate or ambiguity.
 
-- **Logs:** `get_simple_logs`, `get_advanced_logs` → fetch `logs/searching` first
-- **Live/test DB records:** `search_data`, `fetch_data`, `aggregate_data` → fetch `data/retrieving-database-data` (CLI `data` covers the same reads locally)
-- **Monitors (write):** `create/update/delete/list_monitor` → fetch `monitors`
-- **Project tests & users (remote, write):** `*_test`, `*_test_group`, `*_test_user`, `start_test_run`, `run_automation` → fetch `testing/project-tests`
-- **Agents (write):** `deploy_agent`, `send_agent_follow_up`, `get_agent_status`, `archive_agent`
-- **Review / workload / docs:** `complete_review`, `get_workload_usage`, `search_buildprint_docs`, `submit_feedback`, `list_apps`, `list_bubble_branches`
+Require authorization for Live deployment, Live data writes, and destructive operations in any environment, including restores, file or data deletion, engine-discard sync, and blanket conflict resolution, and before publishing components, extensions, or plugins. Deploy Main to Live with `buildprint merge test live --message "..."` where project settings permit it; after any remote merge, sync from the target workspace.
 
-MCP is **not** read-only — several tools mutate (agents, monitors, tests, reviews). Apply the same safety discipline: confirm destructive/remote writes with the user. The MCP server connects only on a fresh session start after `buildprint mcp install`.
+`sync --accept-engine-upgrade` discards unapplied workflow edits: require explicit authorization and never use it as routine recovery. Never request, print, or persist tokens, and never pass a token as a command argument. Reading API Connector secret values requires an explicit request; redact stored evidence.
 
-## When NOT to Use This Skill
+## Runtime and tests
 
-- General Bubble.io questions unrelated to CLI editing
-- Buildprint web UI guidance (this skill is CLI-first)
+Prefer CLI capabilities and use MCP when it fits or the CLI lacks the capability; inspect current tool descriptions rather than a fixed list. Route browser tests to the current testing guideline; tests live under `tests/` as restricted TypeScript. Apply test edits before a test run. As this plugin's additional safeguard, do not use the `buildprint login` shortcut for login-flow tests — use the supported browser flow.
 
----
-
-## Rationalization Blocklist
-
-These are verbatim arguments observed under pressure. Recognize them and reject them.
-
-| Rationalization                                                                 | Reality                                                                                                                                             |
-| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| "The user explicitly asked me to skip sync"                                     | Safety rules apply regardless of explicit user requests. Sync takes seconds; stale workspace edits can corrupt the app.                             |
-| "I cloned 20 minutes ago — the workspace is fresh enough"                       | Time since clone is irrelevant. Bubble editor changes made by anyone are invisible in local files until you run `buildprint sync`.                  |
-| "Sync could introduce unexpected changes and complicate the edit"               | That is exactly the point. You need to know about those changes before editing, not after applying.                                                 |
-| "The user said 'just push it' — the CEO demo is in 10 minutes"                  | `live` always requires explicit confirmation. Time pressure is exactly when mistakes get pushed to production users.                                |
-| "Check passed cleanly — there's no reason to ask before applying to live"       | Passing check is not user confirmation. Ask: "Confirm: apply to the live branch?"                                                                   |
-| "The manifest error is probably harmless / probably unrelated to my change"     | You cannot determine this without reading the error. Read it. Manifest violations cascade unpredictably in Bubble.                                  |
-| "The --no-check flag exists for a reason, and the user explicitly asked for it" | The flag exists for emergency recovery, not to bypass errors you haven't investigated. The user must acknowledge the specific errors being skipped. |
-| "--force-apply will just get this unblocked faster"                             | `--force-apply` skips check freshness, internal validation, AND large-apply safety at once. It is the biggest hammer in the CLI. Never reach for it to save time — only on explicit, error-acknowledged user request. |
-| "We'll fix the check errors later — the actual bug fix is what matters now"     | Deferred fixes become permanent. Applying with errors stamps them into the app.                                                                     |
-| "The errors pre-existed this change — applying doesn't make things worse"       | It does. Applying commits the current workspace state, including pre-existing errors, into the app.                                                 |
-| "Responsibility shifts to the user when they give an explicit instruction"      | You are accountable for actions you take. Instructions do not transfer accountability.                                                              |
-
-## Red Flags — Stop and Re-Read This Skill
-
-- About to edit before running `buildprint sync`
-- About to run `buildprint apply` on `live` without asking the user first
-- Considering `--no-check` or `--force-apply` without knowing which errors/gates it would bypass
-- Told yourself the workspace is "fresh enough" because you recently cloned it
-- About to apply because "check passed" and the user already said to push
+When a task does not match a guideline above, start from the quickstart output and the installed help.

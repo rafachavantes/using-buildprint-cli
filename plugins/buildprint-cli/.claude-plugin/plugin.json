@@ -1,7 +1,7 @@
 {
   "name": "buildprint-cli",
-  "description": "Skill for working with Bubble.io apps via the Buildprint CLI: workflow enforcement, guideline navigation, and command reference",
-  "version": "0.3.0",
+  "description": "BubbleScript guidance and safeguards for Buildprint CLI v5 across Claude Code, Codex, and OpenCode.",
+  "version": "0.4.0",
   "author": {
     "name": "Rafael",
     "email": "contato@moara.digital"
