@@ -6,18 +6,18 @@ A plugin that gives AI coding agents the workflow, safety guardrails, and v5 gui
 
 When you work with Bubble.io apps through the Buildprint CLI v5, this plugin:
 
-- Teaches the BubbleScript workspace loop: clone, inspect, edit, validate, apply, and sync
+- Teaches task-dependent BubbleScript workspace work: clone only when needed, apply validates, sync only for drift
 - Routes each task to the current guideline with `buildprint guidelines <name>` — UI, database, expressions, workflows, API Connector, testing, and more
 - Carries the safeguards the CLI relies on you for: target-specific authorization, Live protection, credential redaction, and savepoint discipline
 - Points to the installed CLI as the authority: `buildprint quickstart`, `buildprint <command> --help`, and generated workspace declarations
 
 ## Why
 
-When using Buildprint on the web, the platform injects rich context before every agent call — Bubble's entity model, valid action types, security patterns, workflow guardrails. On the CLI, the agent sees a BubbleScript workspace and the installed CLI's own documentation. This plugin keeps the agent on the current v5 interfaces and enforces the safeguards that are easy to skip.
+When using Buildprint on the web, the platform injects rich context before every agent call — Bubble's entity model, valid action types, security patterns, workflow guardrails. On the CLI, the agent sees a BubbleScript workspace and the installed CLI's own documentation. This plugin instructs the agent to use current v5 interfaces and follow safeguards that are easy to skip.
 
 ## Requirements
 
-- [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) v5 installed and authenticated. The plugin's safeguards target CLI major 5; if another major is installed, the skill reports the mismatch and asks the owner before proceeding.
+- [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) v5 installed and authenticated. The plugin's safeguards target CLI major 5; if another major is installed, the skill instructs the agent to report the mismatch and ask the owner before proceeding.
 - Claude Code, [OpenAI Codex CLI](https://github.com/openai/codex), or [OpenCode](https://opencode.ai)
 
 The plugin version is independent of the CLI version. Plugin 0.4.0 supports Buildprint CLI 5.x.
@@ -54,7 +54,7 @@ Add the plugin to the `plugin` array in your `opencode.json` (global at `~/.conf
 
 Restart OpenCode. The plugin installs through OpenCode's plugin manager (via Bun) and registers its skill directory so `using-buildprint-cli` is discoverable through the native `skill` tool — no symlinks or manual copies. See [`.opencode/INSTALL.md`](.opencode/INSTALL.md) for migration, update, and troubleshooting notes.
 
-> **Note:** The same skill works identically on all three platforms. No configuration differences.
+> **Note:** All three clients use the same bundled skill; installation differs by client.
 
 ## Setup
 
@@ -76,7 +76,7 @@ cd <the workspace path printed by project clone>
 buildprint guidelines <name>                            # fetch only the guideline the task needs
 ```
 
-A read-only question needs no apply or write: inspect the workspace and answer. An authorized development edit may edit the BubbleScript source and run `buildprint apply` directly, which validates the changed files; address any blocking diagnostics before retrying. Sync is for reconciling editor drift, not a required first step. The skill routes each task to the right guideline and stops on missing target authorization.
+A read-only question needs no apply or write: inspect the workspace and answer. An authorized development edit may edit the BubbleScript source and run `buildprint apply` directly, which validates the changed files; address any blocking diagnostics before retrying. Sync is for reconciling editor drift, not a required first step. The skill instructs the agent to fetch the relevant guideline and stop when target authorization is missing.
 
 ## Links
 
