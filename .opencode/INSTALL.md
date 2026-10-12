@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - [OpenCode](https://opencode.ai) installed
-- [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) installed and authenticated (`buildprint link <token>`)
+- [Buildprint CLI](https://docs.buildprint.ai/cli/installation-and-authentication-iwixh) v5 installed and authenticated. Run `buildprint link` and sign in through the browser; no token pasting is needed.
 
 ## Installation
 
@@ -17,7 +17,7 @@ Add `buildprint-cli` to the `plugin` array in your `opencode.json` (global or pr
 
 Restart OpenCode. The plugin installs through OpenCode's plugin manager (via Bun) and registers its skill directory so the `using-buildprint-cli` skill is discoverable through the native `skill` tool.
 
-Verify by asking: "Help me work on my Bubble.io app via Buildprint" — the agent should activate the skill and run `buildprint guidelines get general` first.
+Verify by asking: "Help me work on my Bubble.io app via Buildprint" — the agent should activate the skill, run `buildprint --version` and `buildprint quickstart`, and confirm the installed CLI is v5.
 
 ## How it works
 
@@ -45,19 +45,21 @@ Use OpenCode's native `skill` tool:
 use skill tool to load using-buildprint-cli
 ```
 
-Then follow the canonical workflow: `sync → explore → fetch guidelines → edit → check → apply`.
+The skill reads the installed CLI once per session (`buildprint --version`, `buildprint quickstart`) and then routes the task to the right `buildprint guidelines <name>` and command help. Its depth is task-dependent: a read-only question needs no apply, while an authorized development edit may apply directly after addressing validation diagnostics.
 
 ## Updating
 
 OpenCode installs `buildprint-cli` through a git-backed package spec. A restart may not pick up the newest commit if Bun pins the resolved git dependency in its cache. If updates don't appear, clear OpenCode's package cache or reinstall the plugin.
 
-To pin a specific version, append a tag or commit ref:
+To pin a specific version, append a commit or tag ref to the plugin spec, for example:
 
 ```json
 {
-  "plugin": ["buildprint-cli@git+https://github.com/rafachavantes/using-buildprint-cli#v0.3.0"]
+  "plugin": ["buildprint-cli@git+https://github.com/rafachavantes/using-buildprint-cli#<approved-commit-or-tag>"]
 }
 ```
+
+Replace `<approved-commit-or-tag>` with the commit or tag you intend to run.
 
 ## Troubleshooting
 
